@@ -1,11 +1,10 @@
-// console.log("hello");
-const http = require('http');
-const hostname = "localhost";
+const express = require('express');
+const routes = require('./routes/routes');
 const port = 8000;
-const Skillserver = http.createServer(function(request, response){
-    response.writeHead(200,{'Content-Type':'text/plain'});
-    response.write("Hello, I am learning Nodejs...");
-    response.end();
-});
-
-Skillserver.listen(port, hostname);
+const app = express();
+const router = express.Router();
+routes(router);
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+app.use('/', router)
+app.listen(port, ()=>console.log("Listening to port " + port));
